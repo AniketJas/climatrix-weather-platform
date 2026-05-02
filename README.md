@@ -1,16 +1,60 @@
-# React + Vite
+# 🌤️ Climatrix
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A modern, responsive weather intelligence dashboard built with React + Tailwind CSS.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Overview
 
-## React Compiler
+**Climatrix** is a feature-rich weather application that delivers real-time weather insights with a clean, intuitive UI.  
+It combines data visualization, geolocation, and dynamic UI elements to create a **product-grade frontend experience**.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🌦️ Weather Insights
+
+- Real-time weather data (temperature, humidity, wind, pressure)
+- 5-day forecast with daily summaries
+- Rain probability chart
+
+### 📊 Data Visualization
+
+- Interactive temperature chart (Recharts)
+- Rain probability graph
+- Air Quality Index (AQI) with pollutant breakdown
+
+### 🌍 Smart Features
+
+- 📍 Geolocation-based auto-detection
+- 🕒 Live city clock (timezone-aware)
+- 🌗 Day/Night theme auto-switch
+
+### 🎨 UI/UX
+
+- Fully responsive (mobile → desktop)
+- Dark / Light mode toggle
+- Glassmorphism design system
+- Smooth animations (weather effects + logo)
+
+### 🗺️ Maps & Extras
+
+- Leaflet map integration
+- Weather-based animations (rain/snow)
+- PWA-ready (installable)
+
+---
+
+## 🧱 Tech Stack
+
+| Category | Tech            |
+| -------- | --------------- |
+| Frontend | React (Vite)    |
+| Styling  | Tailwind CSS    |
+| Charts   | Recharts        |
+| Maps     | Leaflet         |
+| Icons    | lucide-react    |
+| API      | OpenWeather API |
+
+---
