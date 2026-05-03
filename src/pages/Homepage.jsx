@@ -15,14 +15,16 @@ import AirQuality from "../components/AirQuality";
 import WeatherMap from "../components/WeatherMap";
 import WeatherEffects from "../components/WeatherEffects";
 import ThemeToggle from "../components/ThemeToggle";
+import SearchBar from "../components/SearchBar";
 
 import { formatForecast } from "../utils/formatForecast";
-import { Search, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import Brand from "../components/Brand";
 
 export default function HomePage() {
 	const [input, setInput] = useState("");
 	const [city, setCity] = useState("");
+	const [isGeoLocation, setIsGeoLocation] = useState(true); // ✅ NEW
 
 	const coords = useGeolocation();
 	const debouncedInput = useDebounce(input);
@@ -31,9 +33,11 @@ export default function HomePage() {
 		debouncedInput || city
 	);
 
+	// ✅ Set location from GPS
 	useEffect(() => {
-		if (coords && !input) {
+		if (coords && !input && !city) {
 			setCity(`${coords.lat},${coords.lon}`);
+			setIsGeoLocation(true);
 		}
 	}, [coords]);
 
@@ -61,25 +65,21 @@ export default function HomePage() {
 				<Brand />
 
 				{/* Center: Search */}
-				<div className="flex flex-1 max-w-md items-center bg-white dark:bg-gray-800 rounded-full shadow px-4 py-2 mx-4">
-					<Search size={18} className="text-gray-500 dark:text-gray-300" />
-					<input
-						className="flex-1 px-2 outline-none bg-transparent text-gray-800 dark:text-white"
-						placeholder="Search city..."
-						value={input}
-						onChange={(e) => setInput(e.target.value)}
-					/>
-				</div>
+				<SearchBar
+					onSelect={(city) => {
+						setCity(city);
+						setIsGeoLocation(false); // ✅ SWITCH OFF GEO
+					}}
+				/>
 
 				{/* Right: Controls */}
 				<div className="flex items-center gap-2">
 					<ThemeToggle />
 				</div>
-
 			</div>
 
 			{/* 📍 Location Info */}
-			{coords && !input && (
+			{isGeoLocation && (
 				<div className="text-center text-sm text-gray-600 dark:text-gray-300 flex justify-center items-center gap-1">
 					<MapPin size={14} />
 					Using your current location
