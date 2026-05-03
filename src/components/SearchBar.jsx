@@ -14,7 +14,7 @@ export default function SearchBar({ onSelect }) {
   const inputRef = useRef();
   const containerRef = useRef();
 
-  // 🔹 Debounce search
+  // 🔹 Debounce
   useEffect(() => {
     if (!query) {
       setSuggestions([]);
@@ -43,7 +43,7 @@ export default function SearchBar({ onSelect }) {
     setActiveIndex(-1);
   };
 
-  // 🔹 Close dropdown on outside click
+  // 🔹 Close on outside click (FIX)
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -55,6 +55,7 @@ export default function SearchBar({ onSelect }) {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+
     return () =>
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -83,14 +84,12 @@ export default function SearchBar({ onSelect }) {
     );
   };
 
-  // ✅ FIX: Use lat/lon instead of name
   const handleSelect = (city) => {
-    const displayName = `${city.name}, ${city.country}`;
-    const value = `${city.lat},${city.lon}`; // 🔥 CRITICAL FIX
+    const name = `${city.name}, ${city.country}`;
 
-    onSelect(value);
+    onSelect(city.name);
 
-    const updated = [displayName, ...history.filter((h) => h !== displayName)].slice(0, 5);
+    const updated = [name, ...history.filter((h) => h !== name)].slice(0, 5);
     setHistory(updated);
     localStorage.setItem("history", JSON.stringify(updated));
 
@@ -188,8 +187,6 @@ export default function SearchBar({ onSelect }) {
                 <div
                   key={i}
                   onClick={() => {
-                    // ❗ history stores displayName only → cannot recover lat/lon
-                    // so we just pass city name (fallback)
                     onSelect(h.split(",")[0]);
                     setShow(false);
                   }}
