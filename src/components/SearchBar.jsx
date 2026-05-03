@@ -1,3 +1,5 @@
+// :contentReference[oaicite:0]{index=0}
+
 import { useEffect, useState, useRef } from "react";
 import { Search, X } from "lucide-react";
 
@@ -27,23 +29,20 @@ export default function SearchBar({ onSelect }) {
 
   const fetchCities = async (q) => {
     setLoading(true);
-
     try {
       const res = await fetch(
         `https://api.openweathermap.org/geo/1.0/direct?q=${q}&limit=5&appid=${import.meta.env.VITE_OPEN_WEATHER_API_KEY}`
       );
-
       const data = await res.json();
       setSuggestions(data);
     } catch {
       setSuggestions([]);
     }
-
     setLoading(false);
     setActiveIndex(-1);
   };
 
-  // 🔹 Close on outside click (FIX)
+  // 🔹 Close on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -55,7 +54,6 @@ export default function SearchBar({ onSelect }) {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-
     return () =>
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -76,7 +74,7 @@ export default function SearchBar({ onSelect }) {
     return (
       <>
         {text.slice(0, i)}
-        <span className="text-indigo-500 font-semibold">
+        <span className="text-indigo-600 dark:text-indigo-400 font-semibold">
           {text.slice(i, i + query.length)}
         </span>
         {text.slice(i + query.length)}
@@ -121,10 +119,12 @@ export default function SearchBar({ onSelect }) {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-md">
-
+    <div
+      ref={containerRef}
+      className="relative w-full max-w-md transition-colors duration-300"
+    >
       {/* INPUT */}
-      <div className="flex items-center bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-transparent dark:border-gray-700 rounded-full shadow-md px-4 py-2 focus-within:ring-2 focus-within:ring-indigo-400">
+      <div className="flex items-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-full shadow-md px-4 py-2 focus-within:ring-2 focus-within:ring-indigo-500 transition">
 
         <Search size={18} className="text-gray-500 dark:text-gray-400" />
 
@@ -141,7 +141,7 @@ export default function SearchBar({ onSelect }) {
         {query && (
           <X
             size={16}
-            className="cursor-pointer text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            className="cursor-pointer text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition"
             onClick={() => setQuery("")}
           />
         )}
@@ -149,7 +149,7 @@ export default function SearchBar({ onSelect }) {
 
       {/* DROPDOWN */}
       {show && (
-        <div className="absolute w-full mt-2 bg-white/90 dark:bg-gray-800/95 backdrop-blur-lg border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl z-50 overflow-hidden max-h-72 overflow-y-auto">
+        <div className="absolute w-full mt-2 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl z-50 overflow-hidden max-h-72 overflow-y-auto transition">
 
           {/* Loading */}
           {loading && (
@@ -166,7 +166,7 @@ export default function SearchBar({ onSelect }) {
               className={`px-4 py-2 cursor-pointer text-sm flex items-center gap-2 transition
                 ${i === activeIndex
                   ? "bg-indigo-100 dark:bg-indigo-600/30"
-                  : "hover:bg-gray-100 dark:hover:bg-gray-700/70"
+                  : "hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
             >
               <span>{getFlag(city.country)}</span>
@@ -190,7 +190,7 @@ export default function SearchBar({ onSelect }) {
                     onSelect(h.split(",")[0]);
                     setShow(false);
                   }}
-                  className="px-4 py-2 cursor-pointer text-sm hover:bg-gray-100 dark:hover:bg-gray-700/70"
+                  className="px-4 py-2 cursor-pointer text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
                 >
                   {h}
                 </div>
